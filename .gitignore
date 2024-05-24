@@ -4,8 +4,8 @@
 .DS_Store
 .coverage
 local_settings.py
-/static
-/media
+/apps/static
+/apps/media
 Pipfile
 Pipfile.lock
 
