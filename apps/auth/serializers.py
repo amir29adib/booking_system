@@ -12,6 +12,17 @@ class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     confirm_password = serializers.CharField(write_only=True, required=True)
     
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'username', 'password', 'confirm_password')
+        extra_kwargs = {'password': {'write_only': True}}
+        validators = [
+            UniqueTogetherValidator(
+                queryset=User.objects.all(),
+                fields=['username', 'email']
+            )
+        ]
+
     def validate(self, attrs):
         if attrs['password'] != attrs['confirm_password']:
             raise serializers.ValidationError({"password": "Password fields didn't match."})
@@ -33,13 +44,5 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         return super(UserSerializer, self).update(instance, validated_data)
     
-    class Meta:
-        model = User
-        fields = ('id', 'email', 'username', 'password', 'confirm_password')
-        extra_kwargs = {'password': {'write_only': True}}
-        validators = [
-            UniqueTogetherValidator(
-                queryset=User.objects.all(),
-                fields=['username', 'email']
-            )
-        ]
+    def __str__(self):
+        return self.username
