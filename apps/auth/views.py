@@ -37,26 +37,29 @@ class HomeView(APIView):
 
             return Response(response_data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
-            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-        
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)    
     
     def permission_denied(self, request, message=None, code=None):
         if not request.user.is_authenticated:
             raise AuthenticationFailed(detail="Please login to see your info and booking status!")
         return super().permission_denied(request, message, code)
 
+
 @extend_schema(tags=['User'])
 class CustomTokenObtainPairView(TokenObtainPairView):
     pass
+
 
 @extend_schema(tags=['User'])
 class CustomTokenRefreshView(TokenRefreshView):
     pass
 
+
 @extend_schema(tags=['User'])
 class SignupView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
 
 @extend_schema(tags=['User'])
 class LogoutView(APIView):
