@@ -63,13 +63,7 @@ A web application built using Django and Django REST Framework (DRF) that allows
     python manage.py migrate
     ```
 
-5. **Create a superuser:**
-
-    ```bash
-    python manage.py createsuperuser
-    ```
-
-6. **Run the server:**
+5. **Run the server:**
 
     ```bash
     python manage.py runserver
