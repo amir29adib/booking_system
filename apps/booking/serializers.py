@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 class BookingSerializer(serializers.ModelSerializer):
     
     booking_date = serializers.DateField(required=True)
-    
+    # status = serializers.CharField(max_length=20, choices=[('pending', 'Pending'), ('confirmed', 'Confirmed'), ('canceled', 'Canceled')])
+
     class Meta:
         model = Booking
         fields = ('id', 'booking_date', 'user', 'status')

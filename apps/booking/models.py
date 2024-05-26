@@ -4,9 +4,15 @@ from django.contrib.auth.models import User
 
 
 class Booking(BaseModel):
+    STATUS_CHOICES = (
+        ('1', 'Pending'),
+        ('2', 'Confirmed'),
+        ('3', 'Canceled'),
+    )
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     booking_date = models.DateField()
-    status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('confirmed', 'Confirmed'), ('canceled', 'Canceled')], default='pending')
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES)
 
 
     class Meta:

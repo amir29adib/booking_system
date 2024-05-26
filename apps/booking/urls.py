@@ -4,5 +4,5 @@ from booking.views import BookingCreateView, BookingUpdateView, UserBookingListV
 urlpatterns = [
     path('', UserBookingListView.as_view(), name='booking_list'),
     path('create/', BookingCreateView.as_view(), name='booking_create'),
-    path('update/<int:pk>', BookingUpdateView.as_view(), name='booking_update'),
+    path('update/<int:pk>/', BookingUpdateView.as_view(), name='booking_update'),
 ]
