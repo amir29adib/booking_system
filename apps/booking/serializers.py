@@ -1,26 +1,28 @@
 from booking.models import Booking
 from rest_framework import serializers
-from django.models.auth import User
+from django.contrib.auth.models import User
 
 class BookingSerializer(serializers.ModelSerializer):
     
-    booking_date = serializers.DateTimeField(required=True)
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    booking_date = serializers.DateField(required=True)
     
     class Meta:
         model = Booking
-        fields = ('id', 'booking_date', 'user')
+        fields = ('id', 'booking_date', 'user', 'status')
+    
+    def validate(self, attrs):
+        booking_date = attrs.get('booking_date')
 
-    def validate_user(self, value):
-        if not value:
-            raise serializers.ValidationError("User must be selected.")
-        return value
+        if Booking.objects.filter(booking_date=booking_date).exists():
+            raise serializers.ValidationError("A booking for this date already exists.")
+
+        return attrs
     
     def create(self, validated_data):
         return Booking.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.booking_date = validated_data.get('booking_date', instance.booking_date)
-        instance.user = validated_data.get('user', instance.user)
+        instance.status = validated_data.get('status', instance.status)
         instance.save()
         return instance

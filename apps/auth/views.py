@@ -1,4 +1,4 @@
-from rest_framework import generics, authentication, permissions, status
+from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -6,6 +6,8 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 from auth.serializers import UserSerializer
+from booking.models import Booking
+from booking.serializers import BookingSerializer
 
 
 class HomeView(APIView):
@@ -17,8 +19,19 @@ class HomeView(APIView):
 
         try:
             user_info = User.objects.get(id=user_id)
-            serializer = UserSerializer(user_info)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            serializer_user = UserSerializer(user_info)
+            
+            booking_info = Booking.objects.filter(user=user_id)
+            serializer_booking = BookingSerializer(booking_info)
+
+            response_data = {
+                'data' : {
+                    'user' : serializer_user.data,
+                    'booking' : serializer_booking.data,
+                },
+            }
+
+            return Response(response_data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
         
