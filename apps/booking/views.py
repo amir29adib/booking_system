@@ -1,3 +1,4 @@
+from django.core.mail import EmailMessage
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -19,7 +20,28 @@ class BookingCreateView(generics.CreateAPIView):
         booking_date = serializer.validated_data.get('booking_date')
         user_id = self.request.user.id
 
-        serializer.save(user_id=user_id, booking_date=booking_date, status=status)
+        booking_instance = serializer.save(user_id=user_id, booking_date=booking_date, status=status)
+        self.send_booking_email(booking_instance)
+
+    def send_booking_email(self, booking_instance):
+        user = booking_instance.user
+                
+        subject = 'Booking Confirmation'
+        message = (
+            f'Hello {user.username},\n\n'
+            f'Your booking has been successfully created.\n\n'
+            f'Booking Date: {booking_instance.booking_date}\n'
+            f'Status: {booking_instance.status}'
+        )
+
+        email = EmailMessage(
+            subject=subject,
+            body=message,
+            from_email='6467d760a2-89ab42@inbox.mailtrap.io',
+            to=[user.email],
+        )
+
+        email.send()
 
 
 @extend_schema(tags=['Booking'])
