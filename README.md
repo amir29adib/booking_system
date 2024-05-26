@@ -73,7 +73,7 @@ A web application built using Django and Django REST Framework (DRF) that allows
 
 ### API Documentation
 
-Navigate to `http://127.0.0.1:8000/schema/swagger-ui/` to view the Swagger UI documentation.
+Navigate to `http://127.0.0.1:8000` to view the Swagger UI documentation.
 
 ### Endpoints
 
@@ -84,6 +84,8 @@ Navigate to `http://127.0.0.1:8000/schema/swagger-ui/` to view the Swagger UI do
   - `POST /api/auth/logout/`: User logout
 
 - **Booking:**
-  - `POST /api/booking/create/`: Create a new booking
   - `GET /api/booking/`: List booking for the authenticated user
-  - `PUT /api/booking/<id>/update/`: Update the status of a booking
+  - `GET /api/booking/<id>/`: Detail of a booking
+  - `POST /api/booking/create/`: Create a new booking
+  - `DELETE /api/booking/delete/<id>/`: Delete a booking
+  - `PATCH /api/booking/update/<id>/`: Update the booking_date and status of a booking
