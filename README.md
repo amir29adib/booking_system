@@ -1,6 +1,6 @@
 # Booking System
 
-A web application built using Django and Django REST Framework (DRF) that allows users to manage their bookings. This system supports JWT authentication for secure access and utilizes drf-spectacular for comprehensive API documentation.
+A web application built using Django and Django REST Framework (DRF) that allows users to manage their booking. This system supports JWT authentication for secure access and utilizes drf-spectacular for comprehensive API documentation.
 
 ## Features
 
@@ -12,7 +12,7 @@ A web application built using Django and Django REST Framework (DRF) that allows
 
 - **Booking Management**
   - Create Booking
-  - List User Bookings
+  - List User Booking
   - Update Booking Status
 
 - **API Documentation**
@@ -31,10 +31,9 @@ A web application built using Django and Django REST Framework (DRF) that allows
 
 ### Prerequisites
 
-- Python 3.8 or higher
+- Python 3.10 or higher
 - Django 5.0.6
 - Django REST Framework 3.15.1
-- Node.js and npm (for managing frontend dependencies, if applicable)
 
 ### Setup
 
@@ -91,6 +90,6 @@ Navigate to `http://127.0.0.1:8000/schema/swagger-ui/` to view the Swagger UI do
   - `POST /api/auth/logout/`: User logout
 
 - **Booking:**
-  - `POST /api/bookings/create/`: Create a new booking
-  - `GET /api/bookings/`: List bookings for the authenticated user
-  - `PUT /api/bookings/<id>/update/`: Update the status of a booking
+  - `POST /api/booking/create/`: Create a new booking
+  - `GET /api/booking/`: List booking for the authenticated user
+  - `PUT /api/booking/<id>/update/`: Update the status of a booking
