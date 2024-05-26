@@ -37,7 +37,7 @@ class BookingCreateView(generics.CreateAPIView):
         email = EmailMessage(
             subject=subject,
             body=message,
-            from_email='am29.adib@gmail.com',
+            from_email='testdjangoam@gmail.com',
             to=[user.email],
         )
 
