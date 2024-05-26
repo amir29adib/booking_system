@@ -20,8 +20,9 @@ class BookingCreateView(generics.CreateAPIView):
         booking_date = serializer.validated_data.get('booking_date')
         user_id = self.request.user.id
 
-        booking_instance = serializer.save(user_id=user_id, booking_date=booking_date, status=status)
-        self.send_booking_email(booking_instance)
+        serializer.save(user_id=user_id, booking_date=booking_date, status=status)
+        # booking_instance = serializer.save(user_id=user_id, booking_date=booking_date, status=status)
+        # self.send_booking_email(booking_instance)
 
     def send_booking_email(self, booking_instance):
         user = booking_instance.user
