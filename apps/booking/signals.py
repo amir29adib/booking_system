@@ -1,10 +1,9 @@
-import asyncio
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from asgiref.sync import sync_to_async
 from .models import Booking
+
 
 @receiver(post_save, sender=Booking)
 def booking_created(sender, instance, created, **kwargs):
