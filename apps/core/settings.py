@@ -43,8 +43,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
 
     'core',
-    'booking',
-    
+    'booking',    
 ]
 
 MIDDLEWARE = [
@@ -155,8 +154,10 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'testdjangoam@gmail.com'
+EMAIL_HOST_PASSWORD = 'lvnm imql humz nezb'
+EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = '8d90ce4a304725'
-EMAIL_HOST_PASSWORD = '9507892b3221be'
-EMAIL_PORT = '2525'
+
