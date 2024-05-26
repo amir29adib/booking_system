@@ -12,7 +12,7 @@ class Booking(BaseModel):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     booking_date = models.DateField()
-    status = models.IntegerField(max_length=1, choices=STATUS_CHOICES, default='0')
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='0')
 
 
     class Meta:

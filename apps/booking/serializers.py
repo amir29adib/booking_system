@@ -6,11 +6,11 @@ from datetime import datetime
 class BookingSerializer(serializers.ModelSerializer):
     
     booking_date = serializers.DateField(required=True)
-    status = serializers.IntegerField(required=True, max_length=1)
+    status = serializers.CharField(required=True, max_length=1)
 
     class Meta:
         model = Booking
-        fields = ('id', 'booking_date', 'user', 'status')
+        fields = ('id', 'booking_date', 'status')
     
     def validate(self, attrs):
         booking_date = attrs.get('booking_date')

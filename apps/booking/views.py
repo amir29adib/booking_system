@@ -33,6 +33,8 @@ class BookingUpdateView(generics.UpdateAPIView):
 class UserBookingListView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
+    serializer_class = BookingSerializer
+
     
     def get_queryset(self, request):
         return Booking.objects.filter(user=request.user.id)
