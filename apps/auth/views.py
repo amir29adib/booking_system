@@ -4,12 +4,16 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.contrib.auth.models import User
 from auth.serializers import UserSerializer
 from booking.models import Booking
 from booking.serializers import BookingSerializer
+from drf_spectacular.utils import extend_schema
 
 
+
+@extend_schema(tags=['Auth'])
 class HomeView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -40,13 +44,21 @@ class HomeView(APIView):
         if not request.user.is_authenticated:
             raise AuthenticationFailed(detail="Please login to see your info and booking status!")
         return super().permission_denied(request, message, code)
-    
 
+@extend_schema(tags=['Auth'])
+class CustomTokenObtainPairView(TokenObtainPairView):
+    pass
+
+@extend_schema(tags=['Auth'])
+class CustomTokenRefreshView(TokenRefreshView):
+    pass
+
+@extend_schema(tags=['Auth'])
 class SignupView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
+@extend_schema(tags=['Auth'])
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
