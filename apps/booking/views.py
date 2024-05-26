@@ -14,10 +14,12 @@ class BookingCreateView(generics.CreateAPIView):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
 
-    def perform_create(self, request, serializer):
-        user_id = request.user.id
+    def perform_create(self, serializer):
+        status = serializer.validated_data.get('status')
+        booking_date = serializer.validated_data.get('booking_date')
+        user_id = self.request.user.id
 
-        serializer.save(user=user_id)
+        serializer.save(user_id=user_id, booking_date=booking_date, status=status)
 
 @extend_schema(tags=['Booking'])
 class BookingUpdateView(generics.UpdateAPIView):
@@ -25,9 +27,14 @@ class BookingUpdateView(generics.UpdateAPIView):
 
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
+    http_method_names = ['patch']
+
 
     def perform_update(self, serializer):
-        serializer.save()
+        status = serializer.validated_data.get('status')
+        booking_date = serializer.validated_data.get('booking_date')
+        
+        serializer.save(booking_date=booking_date, status=status)
 
 @extend_schema(tags=['Booking'])
 class UserBookingListView(generics.ListAPIView):
@@ -36,5 +43,5 @@ class UserBookingListView(generics.ListAPIView):
     serializer_class = BookingSerializer
 
     
-    def get_queryset(self, request):
-        return Booking.objects.filter(user=request.user.id)
+    def get_queryset(self):
+        return Booking.objects.filter(user=self.request.user.id)

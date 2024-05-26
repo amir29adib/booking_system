@@ -13,7 +13,7 @@ from drf_spectacular.utils import extend_schema
 
 
 
-@extend_schema(tags=['Auth'])
+@extend_schema(tags=['User'])
 class HomeView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -24,9 +24,9 @@ class HomeView(APIView):
         try:
             user_info = User.objects.get(id=user_id)
             serializer_user = UserSerializer(user_info)
-            
+
             booking_info = Booking.objects.filter(user=user_id)
-            serializer_booking = BookingSerializer(booking_info)
+            serializer_booking = BookingSerializer(booking_info, many=True)
 
             response_data = {
                 'data' : {
@@ -45,20 +45,20 @@ class HomeView(APIView):
             raise AuthenticationFailed(detail="Please login to see your info and booking status!")
         return super().permission_denied(request, message, code)
 
-@extend_schema(tags=['Auth'])
+@extend_schema(tags=['User'])
 class CustomTokenObtainPairView(TokenObtainPairView):
     pass
 
-@extend_schema(tags=['Auth'])
+@extend_schema(tags=['User'])
 class CustomTokenRefreshView(TokenRefreshView):
     pass
 
-@extend_schema(tags=['Auth'])
+@extend_schema(tags=['User'])
 class SignupView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-@extend_schema(tags=['Auth'])
+@extend_schema(tags=['User'])
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 

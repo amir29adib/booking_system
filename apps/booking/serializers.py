@@ -1,7 +1,8 @@
 from booking.models import Booking
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from datetime import datetime
+import datetime
+
 
 class BookingSerializer(serializers.ModelSerializer):
     
@@ -13,9 +14,9 @@ class BookingSerializer(serializers.ModelSerializer):
         fields = ('id', 'booking_date', 'status')
     
     def validate(self, attrs):
-        booking_date = attrs.get('booking_date')
+        booking_date = attrs.get('booking_date').strftime('%Y-%m-%d')
         status = attrs.get('status')
-        current_date = datetime.datetime.strptime(datetime.datetime.now(), "%Y-%m-%d")
+        current_date = datetime.datetime.now().strftime('%Y-%m-%d')
 
         if Booking.objects.filter(booking_date=booking_date).exists():
             raise serializers.ValidationError("A booking for this date already exists!")
@@ -23,7 +24,7 @@ class BookingSerializer(serializers.ModelSerializer):
         if booking_date < current_date:
             raise serializers.ValidationError("Date is Expired!")
 
-        if status not in (1,2,3):
+        if str(status) not in ('1','2','3'):
             raise serializers.ValidationError("Status number is not valid!")
 
 
