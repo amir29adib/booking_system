@@ -54,7 +54,7 @@ A web application built using Django and Django REST Framework (DRF) that allows
 3. **Install dependencies:**
 
     ```bash
-    pip install -r requirements.txt
+    pip install -r requirements.txt && cd apps
     ```
 
 4. **Apply migrations:**
